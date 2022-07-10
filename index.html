@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>B01JD</title>
+		
+		<style type="text/css">
+			body {
+				overflow: hidden;
+			}
+
+			html, body, canvas {
+				background: #111111;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			canvas.height = window.innerHeight;
+			canvas.width = window.innerWidth;
+
+			var context = canvas.getContext('2d');
+
+			var font = 'arial';
+			var fontSize = 10;
+			context.font = fontSize + 'px ' + font;
+			var cols = canvas.width / fontSize;
+
+			var charSet;
+			charSet = 'B01JD';
+			charSet = charSet.split('');
+
+			var drops = [];
+			for (var col = 0; col < cols; col++) {
+				drops[col] = Math.floor(Math.random() * canvas.height);
+			}
+
+			setInterval(rain, 25);
+
+			function rain() {
+				context.fillStyle = 'rgba(0, 0, 0, 0.05)';
+				context.fillRect(0, 0, canvas.width, canvas.height);
+
+				for (var col = 0; col < drops.length; col++) {
+					var char = charSet[Math.floor(Math.random() * charSet.length)];
+					context.fillStyle = randdomColor();
+					context.fillText(char, col * fontSize, drops[col] * fontSize);
+
+					if (Math.random() > 0.99) {
+						drops[col] = 0;
+					}
+
+					drops[col]++;
+				}
+			}
+
+			function randdomColor() {
+				return 'rgb(' +
+					Math.floor(Math.random() * 256) + ',' +
+					Math.floor(Math.random() * 256) + ',' +
+					Math.floor(Math.random() * 256) + ')';
+			}
+		</script>
+	</body>
+</html>
